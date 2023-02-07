@@ -39,11 +39,14 @@ resource "tfe_workspace" "this" {
   speculative_enabled           = true
   structured_run_output_enabled = true
 
-  # VCS settings
-  vcs_repo {
-    identifier     = var.vcs_github_identifier
-    branch         = var.vcs_github_branch
-    oauth_token_id = var.vcs_github_oauth_token_id
+  # duplicate VCS settings from the terraform workspace
+  dynamic "vcs_repo" {
+    for_each = data.tfe_workspace.this.vcs_repo
+    content {
+      identifier     = vcs_repo.identifier
+      branch         = vcs_repo.branch
+      oauth_token_id = vcs_repo.oauth_token_id
+    }
   }
 
   lifecycle {

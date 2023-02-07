@@ -7,10 +7,18 @@ data "env_variable" "tf_cloud_organization" {
 }
 
 #
-# set the current organization
+# the organization identified by TF_CLOUD_ORGANIZATION
 #
 data "tfe_organization" "this" {
   name = data.env_variable.tf_cloud_organization.value
+}
+
+#
+# the current workspace (terraform)
+#
+data "tfe_workspace" "this" {
+  organization = data.tfe_organization.this.name
+  name         = terraform.workspace
 }
 
 locals {

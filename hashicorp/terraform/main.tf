@@ -5,7 +5,7 @@ terraform {
 
   cloud {
     workspaces {
-      name = "terraform-cloud"
+      name = "terraform"
     }
   }
 
