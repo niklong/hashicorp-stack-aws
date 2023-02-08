@@ -3,8 +3,8 @@ output "environment" {
   value = local.environment
 }
 
-output "default_tags" {
-  value = local.default_tags
+output "aws_default_tags" {
+  value = local.aws_default_tags
 }
 
 output "aws_region" {
