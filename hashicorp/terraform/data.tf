@@ -23,13 +23,6 @@ data "tfe_workspace" "this" {
 
 locals {
 
-  # default provider tags
-  default_tags = {
-    Solution    = "Getting Started with Hashicorp"
-    Environment = local.environment
-    Tool        = "Terraform"
-  }
-
   # environment specific locals
   environment               = var.environment
   is_production_environment = var.environment == "Production"

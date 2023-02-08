@@ -1,7 +1,4 @@
 
-#
-# Terraform
-#
 variable "terraform_version" {
   type    = string
   default = ">= 1.3.7" # current version
