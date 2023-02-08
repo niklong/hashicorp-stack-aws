@@ -29,15 +29,17 @@ locals {
 
   # normalize workspace variables
   workspace_variables = {
-    for workspace_name, workspace in local.workspaces : workspace_name => {
-      for variable_name, variable in lookup(workspace, "variables", {}) : variable_name => {
-        workspace_name = workspace_name
-        category       = variable.category
-        default        = lookup(variable, "default_${local.environment}", lookup(variable, "default", null))
-        sensitive      = lookup(variable, "sensitive", false)
-        hcl            = lookup(variable, "hcl", false)
-      } if(contains(keys(variable), "default_${local.environment}") || contains(keys(variable), "default"))
-    }
+    for element in flatten([
+      for workspace_name, workspace in local.workspaces : [
+        for variable_name, variable in lookup(workspace, "variables", {}) : {
+          workspace_name = workspace_name
+          category       = variable.category
+          default        = lookup(variable, "default_${local.environment}", lookup(variable, "default", null))
+          sensitive      = lookup(variable, "sensitive", false)
+          hcl            = lookup(variable, "hcl", false)
+        } if(contains(keys(variable), "default_${local.environment}") || contains(keys(variable), "default"))
+      ]
+    ]) : element.workspace_name => element
   }
 
   # normalize worksplace variable sets

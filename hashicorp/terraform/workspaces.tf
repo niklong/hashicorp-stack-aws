@@ -43,9 +43,9 @@ resource "tfe_workspace" "this" {
   dynamic "vcs_repo" {
     for_each = data.tfe_workspace.this.vcs_repo
     content {
-      identifier     = vcs_repo.identifier
-      branch         = vcs_repo.branch
-      oauth_token_id = vcs_repo.oauth_token_id
+      identifier     = vcs_repo.value.identifier
+      branch         = vcs_repo.value.branch
+      oauth_token_id = vcs_repo.value.oauth_token_id
     }
   }
 
