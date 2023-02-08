@@ -68,5 +68,12 @@ locals {
 
   # our workspaces
   workspaces = {
+    "aws-vpc" = {
+      working_directory   = "/aws/vpc"
+      global_remote_state = true
+      variable_set_ids = {
+        aws = tfe_variable_set.aws.id
+      }
+    }
   }
 }
